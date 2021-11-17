@@ -6,6 +6,7 @@ const editTask = require('./controllers/editTask')
 const deleteTask = require('./controllers/deleteTask')
 const getTasks = require('./controllers/getTasks')
 const authenticationMiddleware = require('./middleware/authentication')
+const handleRefresh = require('./controllers/refresh')
 const { graphqlHTTP } = require('express-graphql')
 const schema = require('./queries/graphql')
 
@@ -21,6 +22,7 @@ app.use(router)
 
 router.route('/register').post(handleRegister)
 router.route('/login').post(handleLogin)
+router.route('/refresh').post(handleRefresh)
 
 router.route('/addTask').post(authenticationMiddleware, addTask)
 router.route('/updateTask').put(authenticationMiddleware, editTask)
