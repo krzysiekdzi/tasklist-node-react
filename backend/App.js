@@ -6,11 +6,16 @@ const editTask = require('./controllers/editTask')
 const deleteTask = require('./controllers/deleteTask')
 const getTasks = require('./controllers/getTasks')
 const authenticationMiddleware = require('./middleware/authentication')
+const { graphqlHTTP } = require('express-graphql')
+const schema = require('./queries/graphql')
 
 const app = express()
 const router = express.Router()
 
 app.use(express.json())
+app.use('/graphql', authenticationMiddleware, graphqlHTTP({
+  schema,
+}));
 app.use(router)
 
 
@@ -25,7 +30,7 @@ router.route('/tasks').get(authenticationMiddleware, getTasks)
 
 const start = async () => {
     try {
-      app.listen(5000, () => {}
+      app.listen(5000, () => {console.log("Started OK")}
       );
     } catch (error) {
       console.log(error);
